@@ -35,7 +35,7 @@ Data used under "Open Government Licence" as published on Met Office website.
 <div style="border: 2px solid black;">![screenshot](./images/screenshot-4.png)</div>
 <div style="border: 2px solid black;">![screenshot](./images/screenshot-3.png)</div>
 <div style="border: 2px solid black;">![screenshot](./images/screenshot-2.png)</div>
-<div style="border: 2px solid black;">![screenshot](./images/screeshot-1.png)</div>
+<div style="border: 2px solid black;">![screenshot](./images/screenshot-1.png)</div>
 
 
 

@@ -1,3 +1,6 @@
+from sklearn.model_selection import KFold
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
 import streamlit as st
 import pandas as pd
 import seaborn as sns
@@ -37,11 +40,14 @@ complex techniques."""
             )
 
 # Load data function
+
+
 @st.cache_data
 def load_weather_data():
     file_path = './data/heathrowdata.txt'
-    column_names = ['yyyy', 'mm', 't_max', 't_min', 'af_days', 'rain_mm', 'sun_hours', 'extra']
-    
+    column_names = ['yyyy', 'mm', 't_max', 't_min',
+                    'af_days', 'rain_mm', 'sun_hours', 'extra']
+
     # Read file and clean it
     df = pd.read_csv(file_path, skiprows=7, sep=r'\s+', names=column_names)
     df.drop(columns=['extra'], inplace=True)
@@ -51,10 +57,13 @@ def load_weather_data():
     # Clean sun_hours column and convert types
     df['sun_hours'] = df['sun_hours'].str.replace('#', '', regex=False)
 
-    numeric_columns = ['yyyy', 'mm', 't_max', 't_min', 'af_days', 'rain_mm', 'sun_hours']
-    df[numeric_columns] = df[numeric_columns].apply(pd.to_numeric, errors='coerce')
+    numeric_columns = ['yyyy', 'mm', 't_max',
+                       't_min', 'af_days', 'rain_mm', 'sun_hours']
+    df[numeric_columns] = df[numeric_columns].apply(
+        pd.to_numeric, errors='coerce')
 
     return df
+
 
 # Load and display data
 weather_data = load_weather_data()
@@ -63,7 +72,8 @@ st.markdown("## 📄 Raw Heathrow Weather Data (Cleaned)")
 
 st.dataframe(weather_data.head(10))
 
-st.markdown(f"**Total Rows:** {weather_data.shape[0]} | **Columns:** {weather_data.shape[1]}")
+st.markdown(
+    f"**Total Rows:** {weather_data.shape[0]} | **Columns:** {weather_data.shape[1]}")
 
 "---"
 
@@ -75,7 +85,7 @@ Any supervised machine learning method, like regression, requires a set of lable
 st.latex(r"""
 D := \{(X_1, Y_1), (X_2, Y_2), \ldots, (X_n, Y_n))\}
 """)
-                 
+
 st.markdown(r"""
 Here, $X_i^d$ are the features and $Y_i$ is the label, d is dimension.
 For a regression model, the label $Y_i \in \mathbb{R}$ is a continuous variable.  
@@ -162,7 +172,6 @@ Where:
 """)
 
 
-
 st.markdown("#### Line in $D$-Dimensions")
 
 st.markdown(r"""
@@ -213,7 +222,6 @@ st.latex(r"""
 """)
 
 
-
 st.markdown("#### Ordinary Least Squares (OLS)")
 
 st.markdown("""
@@ -231,7 +239,6 @@ w = \Sigma_{Y,X} \Sigma_{X,X}^{-1}
 st.latex(r"""
 w_0 = \bar{Y} - w \bar{X}^T
 """)
-
 
 
 st.markdown("Where the covariance matrices are defined as:")
@@ -258,11 +265,10 @@ Now that the data is cleaned, we begin by exploring it visually and statisticall
 We will group data by year or month and explore relationships between temperature (`t_max`, `t_min`) and targets (`sun_hours`, `af_days`).  
 """)
 
-import matplotlib.pyplot as plt
 
 st.markdown("#### 📈 Annual Mean Temperatures with trend line")
-st.markdown("We compute yearly average for `t_max` and `t_min` to observe trend over the years." \
-"We observe a general warming trend in the maximum and minimum temperatures at Heathrow.")
+st.markdown("We compute yearly average for `t_max` and `t_min` to observe trend over the years."
+            "We observe a general warming trend in the maximum and minimum temperatures at Heathrow.")
 
 grouped_by_year = weather_data.groupby('yyyy').mean(numeric_only=True)
 
@@ -286,7 +292,8 @@ st.pyplot(fig)
 
 
 st.markdown("#### 🌤️ Monthly Means: Sunshine & Frost")
-st.markdown("We compute monthly averages across years for `sun_hours` and `af_days` to understand seasonality.")
+st.markdown(
+    "We compute monthly averages across years for `sun_hours` and `af_days` to understand seasonality.")
 
 grouped_by_month = weather_data.groupby('mm').mean(numeric_only=True)
 
@@ -314,9 +321,6 @@ st.pyplot(fig)
 
 # Regression Analysis
 
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split
 
 "---"
 
@@ -339,14 +343,16 @@ Year and Month are included to capture seasonality and long-term warming trends 
 """)
 
 # Let user choose which Y to predict
-target_variable = st.selectbox("Choose target variable (Y):", ['sun_hours', 'af_days'])
+target_variable = st.selectbox("Choose target variable (Y):", [
+                               'sun_hours', 'af_days'])
 
 # Feature matrix and label
 X = weather_data[['t_max', 't_min', 'yyyy', 'mm']]
 Y = weather_data[target_variable]
 
 # Split 70:30
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=42)
+X_train, X_test, Y_train, Y_test = train_test_split(
+    X, Y, test_size=0.3, random_state=42)
 
 # Train model
 model = LinearRegression()
@@ -359,8 +365,10 @@ st.markdown(f"**RMS Error on Test Set:** `{rms:.2f}`")
 
 # Predicted vs True Scatter Plot
 fig, ax = plt.subplots()
-ax.scatter(Y_test, Y_pred, alpha=0.6, color='blue', s=30, label='Predicted vs True')
-ax.plot([Y_test.min(), Y_test.max()], [Y_test.min(), Y_test.max()], 'r--')  # Identity line
+ax.scatter(Y_test, Y_pred, alpha=0.6, color='blue',
+           s=30, label='Predicted vs True')
+ax.plot([Y_test.min(), Y_test.max()], [
+        Y_test.min(), Y_test.max()], 'r--')  # Identity line
 ax.set_xlabel("True Values")
 ax.set_ylabel("Predicted Values")
 ax.set_title(f"Prediction vs Actual for {target_variable}")
@@ -443,6 +451,7 @@ def evaluate_model(X, y, test_size=0.3):
 
     return train_sizes, rms_train, rms_test
 
+
 st.markdown("#### 🧪 Learning Curves")
 
 # Prepare features and targets
@@ -451,23 +460,29 @@ y_sun = weather_data['sun_hours']
 y_af = weather_data['af_days']
 
 # Evaluate both targets
-train_sizes_sun, rms_train_sun, rms_test_sun = evaluate_model(X, y_sun, test_size=0.3)
-train_sizes_af, rms_train_af, rms_test_af = evaluate_model(X, y_af, test_size=0.3)
+train_sizes_sun, rms_train_sun, rms_test_sun = evaluate_model(
+    X, y_sun, test_size=0.3)
+train_sizes_af, rms_train_af, rms_test_af = evaluate_model(
+    X, y_af, test_size=0.3)
 
 # Plot results
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # sun_hours plot
-axes[0].plot(train_sizes_sun, rms_train_sun, label='Train RMS', color='blue', marker='o')
-axes[0].plot(train_sizes_sun, rms_test_sun, label='Test RMS', color='red', marker='o')
+axes[0].plot(train_sizes_sun, rms_train_sun,
+             label='Train RMS', color='blue', marker='o')
+axes[0].plot(train_sizes_sun, rms_test_sun,
+             label='Test RMS', color='red', marker='o')
 axes[0].set_title('Learning Curve: sun_hours')
 axes[0].set_xlabel('Training Set Fraction')
 axes[0].set_ylabel('RMS')
 axes[0].legend()
 
 # af_days plot
-axes[1].plot(train_sizes_af, rms_train_af, label='Train RMS', color='blue', marker='o')
-axes[1].plot(train_sizes_af, rms_test_af, label='Test RMS', color='red', marker='o')
+axes[1].plot(train_sizes_af, rms_train_af,
+             label='Train RMS', color='blue', marker='o')
+axes[1].plot(train_sizes_af, rms_test_af,
+             label='Test RMS', color='red', marker='o')
 axes[1].set_title('Learning Curve: af_days')
 axes[1].set_xlabel('Training Set Fraction')
 axes[1].set_ylabel('RMS')
@@ -521,7 +536,8 @@ corr_matrix = weather_data[['t_max', 't_min', 'sun_hours', 'af_days']].corr()
 
 # Plot
 fig, ax = plt.subplots(figsize=(6, 5))
-sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f", square=True, ax=ax)
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm',
+            fmt=".2f", square=True, ax=ax)
 ax.set_title("Correlation Matrix: Key Variables")
 st.pyplot(fig)
 
@@ -532,11 +548,11 @@ st.markdown("""
 
 "---"
 
-# Ridge Regression 
+# Ridge Regression
 
 st.markdown("## 📏 Ridge Regression with λ (Lambda) Tuning")
 
-### Theory Recap
+# Theory Recap
 
 st.markdown(r"""
 Linear models like OLS are sensitive to outliers and multicollinearity in input features. 
@@ -555,6 +571,7 @@ This **regularizes** the model, stabilizes training when features are correlated
 We evaluate the model for different values of $\lambda$, and report the **test RMS**.
 """)
 
+
 def root_mean_squared_error(y_true, y_pred):
     return np.sqrt(mean_squared_error(y_true, y_pred))
 
@@ -562,7 +579,8 @@ def root_mean_squared_error(y_true, y_pred):
 def evaluate_ridge_regression(X, y, lambdas, test_size=0.3, random_state=42):
     results = {'lambda': [], 'rms_train': [], 'rms_test': []}
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=random_state)
 
     for l in lambdas:
         model = Ridge(alpha=l)
@@ -571,10 +589,13 @@ def evaluate_ridge_regression(X, y, lambdas, test_size=0.3, random_state=42):
         y_test_pred = model.predict(X_test)
 
         results['lambda'].append(l)
-        results['rms_train'].append(root_mean_squared_error(y_train, y_train_pred))
-        results['rms_test'].append(root_mean_squared_error(y_test, y_test_pred))
+        results['rms_train'].append(
+            root_mean_squared_error(y_train, y_train_pred))
+        results['rms_test'].append(
+            root_mean_squared_error(y_test, y_test_pred))
 
     return pd.DataFrame(results)
+
 
 st.markdown("#### 🔬 Experiment Setup")
 
@@ -602,14 +623,16 @@ st.markdown("#### 📊 Results: RMS vs λ")
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 # Sun Hours
-axes[0].plot(sun_results['lambda'], sun_results['rms_test'], marker='o', color='teal')
+axes[0].plot(sun_results['lambda'], sun_results['rms_test'],
+             marker='o', color='teal')
 axes[0].set_xscale('log')
 axes[0].set_xlabel('Lambda (log scale)')
 axes[0].set_ylabel('Test RMS')
 axes[0].set_title('Ridge Regression — Sun Hours')
 
 # Air Frost Days
-axes[1].plot(af_results['lambda'], af_results['rms_test'], marker='o', color='indigo')
+axes[1].plot(af_results['lambda'], af_results['rms_test'],
+             marker='o', color='indigo')
 axes[1].set_xscale('log')
 axes[1].set_xlabel('Lambda (log scale)')
 axes[1].set_ylabel('Test RMS')
@@ -643,7 +666,6 @@ We perform this for Ridge Regression with varying values of $\lambda$, chosen ar
 Since there was no clear reduction in RMS_test for `af_days`, we only perform this validation on `sun_hours`.
 """)
 
-from sklearn.model_selection import KFold
 
 def cross_validate_ridge(X, y, l, k=5, random_state=42):
     kf = KFold(n_splits=k, shuffle=True, random_state=random_state)
@@ -703,7 +725,8 @@ test_stds = [r['test_rms_std'] for r in results]
 st.markdown("#### 📈 Cross-Validation Results")
 
 fig, ax = plt.subplots(figsize=(10, 5))
-ax.errorbar(lambdas, test_means, yerr=test_stds, fmt='-o', capsize=5, label='Test RMS')
+ax.errorbar(lambdas, test_means, yerr=test_stds,
+            fmt='-o', capsize=5, label='Test RMS')
 ax.set_xscale('log')
 ax.set_xlabel("Lambda (log scale)")
 ax.set_ylabel("RMS Error")
@@ -754,5 +777,3 @@ This project highlights the value of:
 🛠️ Link (https://github.com/dushyant-goel/climate_regression_app)
 
 """)
-
-

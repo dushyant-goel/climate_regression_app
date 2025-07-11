@@ -32,10 +32,11 @@ Data used under "Open Government Licence" as published on Met Office website.
 
 👉 [Try the interactive Streamlit app here](https://climate-regression-app.streamlit.app/)
 
-![screenshot](./images/screenshot-4.png)
-![screenshot](./images/screenshot-3.png)
-![screenshot](./images/screenshot-2.png)
-![screenshot](./images/screenshot-1.png)
+<div align="center"> 
+  <img src="./images/screenshot-4.png" width="250" style="border:1px solid #ccc; margin: 10px;" /> 
+  <img src="./images/screenshot-3.png" width="250" style="border:1px solid #ccc; margin: 10px;" /> 
+  <img src="./images/screenshot-2.png" width="250" style="border:1px solid #ccc; margin: 10px;" /> 
+</div>
 
 ---
 
@@ -46,7 +47,7 @@ git clone https://github.com/your-username/climate-regression-heathrow.git
 cd climate-regression-heathrow
 pip install -r requirements.txt
 streamlit run app.py
-
+```
 ---
 
 ## 🧠 What This Project Covers

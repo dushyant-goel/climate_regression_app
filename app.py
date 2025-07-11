@@ -774,6 +774,6 @@ This project highlights the value of:
 
 
 📤 The full Streamlit app is now available on GitHub.
-🛠️ Link (https://github.com/dushyant-goel/climate_regression_app)
+🛠️ [Link](https://github.com/dushyant-goel/climate_regression_app)
 
 """)

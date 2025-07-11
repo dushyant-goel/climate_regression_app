@@ -32,10 +32,14 @@ Data used under "Open Government Licence" as published on Met Office website.
 
 👉 [Try the interactive Streamlit app here](https://climate-regression-app.streamlit.app/)
 
-![screenshot](./images/screenshot-4.png)
-![screenshot](./images/screenshot-3.png)
-![screenshot](./images/screenshot-2.png)
-![screenshot](./images/screeshot-1.png)
+<div style="border: 2px solid black;">![screenshot](./images/screenshot-4.png)</div>
+<div style="border: 2px solid black;">![screenshot](./images/screenshot-3.png)</div>
+<div style="border: 2px solid black;">![screenshot](./images/screenshot-2.png)</div>
+<div style="border: 2px solid black;">![screenshot](./images/screeshot-1.png)</div>
+
+
+
+
 ---
 
 ## 🧠 What This Project Covers

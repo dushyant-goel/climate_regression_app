@@ -9,7 +9,7 @@ This project explores weather data from the **Met Office station at Heathrow** t
 
 We use **Linear Regression** and **Ridge Regression** to understand climate trends and build interpretable predictive models.
 
-The aim is **not** to show advance ML techniques but to take a deep dive into model tuning, evaluation and validation. 
+The aim is **not** to show advance ML techniques but to take a deep dive into model tuning, evaluation and validation.
 
 ---
 
@@ -32,13 +32,20 @@ Data used under "Open Government Licence" as published on Met Office website.
 
 👉 [Try the interactive Streamlit app here](https://climate-regression-app.streamlit.app/)
 
-<div style="border: 2px solid black;">![screenshot](./images/screenshot-4.png)</div>
-<div style="border: 2px solid black;">![screenshot](./images/screenshot-3.png)</div>
-<div style="border: 2px solid black;">![screenshot](./images/screenshot-2.png)</div>
-<div style="border: 2px solid black;">![screenshot](./images/screenshot-1.png)</div>
+![screenshot](./images/screenshot-4.png)
+![screenshot](./images/screenshot-3.png)
+![screenshot](./images/screenshot-2.png)
+![screenshot](./images/screenshot-1.png)
 
+---
 
+## 💻 Running the App Locally
 
+```bash
+git clone https://github.com/your-username/climate-regression-heathrow.git
+cd climate-regression-heathrow
+pip install -r requirements.txt
+streamlit run app.py
 
 ---
 
@@ -77,14 +84,4 @@ Data used under "Open Government Licence" as published on Met Office website.
 - Using Ridge Regression to manage correlated features
 - Performing and visualizing K-fold cross-validation
 - Communicating model choices with clarity
-
----
-
-## 💻 Running the App Locally
-
-```bash
-git clone https://github.com/your-username/climate-regression-heathrow.git
-cd climate-regression-heathrow
-pip install -r requirements.txt
-streamlit run app.py
 

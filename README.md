@@ -9,6 +9,8 @@ This project explores weather data from the **Met Office station at Heathrow** t
 
 We use **Linear Regression** and **Ridge Regression** to understand climate trends and build interpretable predictive models.
 
+The aim is **not** to show advance ML techniques but to take a deep dive into model tuning, evaluation and validation. 
+
 ---
 
 ## Data Source
@@ -28,11 +30,12 @@ Data used under "Open Government Licence" as published on Met Office website.
 
 ## 📊 App Demo
 
-<details>
-👉 [Try the interactive Streamlit app here](https://your-streamlit-app-url)
+👉 [Try the interactive Streamlit app here](https://climate-regression-app.streamlit.app/)
 
-![screenshot](./screenshots/app_preview.png)
-</details>
+![screenshot](./iamges/screenshot-4.png)
+![screenshot](./images/screenshot-3.png)
+![screenshot](./images/screenshot-2.png)
+![screenshot](./images/screeshot-1.png)
 ---
 
 ## 🧠 What This Project Covers
@@ -75,10 +78,9 @@ Data used under "Open Government Licence" as published on Met Office website.
 
 ## 💻 Running the App Locally
 
-<details>
 ```bash
 git clone https://github.com/your-username/climate-regression-heathrow.git
 cd climate-regression-heathrow
 pip install -r requirements.txt
 streamlit run app.py
-</details>
+

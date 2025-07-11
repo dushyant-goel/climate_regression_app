@@ -750,7 +750,8 @@ This project highlights the value of:
 - Combining **statistical insight** with **ML workflows** for interpretable, stable models
 
 
-📤 The full Streamlit app is now available on GitHub. 
+📤 The full Streamlit app is now available on GitHub.
+🛠️ Link (https://github.com/dushyant-goel/climate_regression_app)
 
 """)
 
